@@ -1,10 +1,11 @@
-FROM projectdiscovery/nuclei:latest
-USER root
-COPY start.sh nuclei_seqhub.py /opt/nuclei/
+FROM python:3.9.2-slim-buster
+COPY download_jq.sh download_nuclei.sh start.sh nuclei_seqhub.py /opt/nuclei/
 WORKDIR /opt/nuclei/
-RUN apk update \
-    && apk --no-cache add git bash python3 ca-certificates jq \
+RUN apt-get update \
+    && apt-get -y install git bash curl wget \
     && git clone https://github.com/projectdiscovery/nuclei-templates.git \
     && chmod +x /opt/nuclei/start.sh
+RUN ["/bin/bash", "-c", "./download_jq.sh"]
+RUN ["/bin/bash", "-c", "./download_nuclei.sh"]
 COPY .nuclei-ignore /opt/nuclei/nuclei-templates/
-ENTRYPOINT ["/opt/nuclei/start.sh"]
+ENTRYPOINT ["./start.sh"]

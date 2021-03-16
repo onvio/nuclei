@@ -14,14 +14,12 @@ def seqhubreport():
         severity = vuln['info']['severity']
         'low' if severity == 'info' else severity
         'high' if severity == 'critical' else severity
-        print(severity)
         description = vuln['info'].get('description')
         if not description:
             description = vuln.get('templateID')
         if vuln.get('extracted_results'):
             extracted_results_str = ' '.join([str(e.replace('"', '')) for e in vuln.get('extracted_results')])
             description = description + ', ' + extracted_results_str
-        print(description)
         with open(seqhubreportpath, 'w'):
             secretsdb = {
                 "title": vuln.get('templateID'),
