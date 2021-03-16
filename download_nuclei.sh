@@ -1,5 +1,4 @@
 #!/bin/bash
-#!/bin/bash
 set -x
 
 URL=$(curl --silent https://api.github.com/repos/projectdiscovery/nuclei/releases/latest |  jq -r '.assets[] | select(.browser_download_url | contains("_linux_amd64")) | .browser_download_url') && wget --quiet $URL
