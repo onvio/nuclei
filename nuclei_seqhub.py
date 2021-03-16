@@ -2,18 +2,18 @@ from io import SEEK_CUR
 import json
 import sys
 
-with open('/var/reports/nuclei_formatted.json', 'r') as jsondict:
+with open('reports/nuclei_formatted.json', 'r') as jsondict:
     findings = json.load(jsondict)
 
-seqhubreportpath = "/var/reports/seqhubreport.json"
+seqhubreportpath = "reports/seqhubreport.json"
 
 
 def seqhubreport():
     jsonobject = {"vulnerabilities": []}
     for vuln in findings["vulnerabilities"]:
         severity = vuln['info']['severity']
-        'low' if severity == 'info' else severity
-        'high' if severity == 'critical' else severity
+        severity = 'low' if severity == 'info' else severity
+        severity = 'high' if severity == 'critical' else severity
         description = vuln['info'].get('description')
         if not description:
             description = vuln.get('templateID')
