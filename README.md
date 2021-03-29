@@ -3,7 +3,7 @@ Oneliner to run nuclei scan against target URL using recent nuclei templates
 
 ## Running
 ```
-docker run -v $(pwd):/var/reports nuclei https://example.org
+docker run -v $(pwd):/var/reports seqhub/nuclei https://example.org
 ```
   
 Example targets:
@@ -23,4 +23,4 @@ Outputs will be saved in /var/reports
 | Report               | Description                                             |
 |----------------------|---------------------------------------------------------|
 | nuclei.json          | Full nuclei report in json                              |
-| seqhubreport.json    | JSON report for with SEQHUB Generic JSON warnings       |
+| seqhub.json          | JSON report for with SEQHUB Generic JSON warnings       |
