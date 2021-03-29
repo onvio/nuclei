@@ -1,8 +1,6 @@
 #!/bin/sh
 set -x
 
-mkdir /var/reports
-
 nuclei -update-templates
 nuclei -target $1 \
     -H "X-Scanner: Nuclei" \
