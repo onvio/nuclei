@@ -1,13 +1,15 @@
-FROM python:3.9.2-slim-buster
-COPY download_jq.sh download_nuclei.sh start.sh nuclei_seqhub.py /opt/nuclei/
-WORKDIR /opt/nuclei/
-RUN apt-get update \
-    && apt-get -y install git bash curl wget \
-    && git clone https://github.com/projectdiscovery/nuclei-templates.git \
+FROM projectdiscovery/nuclei:latest
+
+# Install python/pip
+ENV PYTHONUNBUFFERED=1
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+RUN python3 -m ensurepip
+RUN pip3 install --no-cache --upgrade pip setuptools
+
+COPY . /opt/nuclei/
+
+RUN mkdir /var/reports \
     && chmod +x /opt/nuclei/start.sh \
-    && chmod +x download_jq.sh \
-    && chmod +x download_nuclei.sh
-RUN ["/bin/bash", "-c", "./download_jq.sh"]
-RUN ["/bin/bash", "-c", "./download_nuclei.sh"]
-COPY .nuclei-ignore /opt/nuclei/nuclei-templates/
-ENTRYPOINT ["./start.sh"]
+    && nuclei -update-templates
+
+ENTRYPOINT ["/opt/nuclei/start.sh"]
