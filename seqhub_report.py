@@ -3,7 +3,7 @@ import os.path
 
 def parse_report(nuclei_report, seqhub_report):
     nuclei_findings  = []
-    seqhub_findings = []
+    seqhub_findings = { "vulnerabilities": [] }
 
     if os.path.isfile(nuclei_report):
         with open(nuclei_report, 'r') as file:
@@ -31,7 +31,7 @@ def parse_report(nuclei_report, seqhub_report):
             description = info['description']
 
         with open(seqhub_report, 'w'):
-            seqhub_findings.append({
+            seqhub_findings["vulnerabilities"].append({
                 "title": info['name'],
                 "description": f"{vuln['matched']} {description} ({vuln['templateID']})",
                 "severity": severity,
