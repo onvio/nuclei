@@ -1,20 +1,22 @@
 import json
+import os.path
 
 def parse_report(nuclei_report, seqhub_report):
     nuclei_findings  = []
     seqhub_findings = []
 
-    with open(nuclei_report, 'r') as file:
-        nuclei_json = file.read()
-        # Nuclei json output is not valid json, so fix it
-        nuclei_json = f"[{nuclei_json}]"
-        nuclei_json = nuclei_json.replace("}\n", "},")
-    
-        # remove the last comma to get a properly formatted json
-        last_char_index = nuclei_json.rfind(",")
-        nuclei_json = nuclei_json[:last_char_index] + nuclei_json[last_char_index+1:]
+    if os.path.isfile(nuclei_report):
+        with open(nuclei_report, 'r') as file:
+            nuclei_json = file.read()
+            # Nuclei json output is not valid json, so fix it
+            nuclei_json = f"[{nuclei_json}]"
+            nuclei_json = nuclei_json.replace("}\n", "},")
+        
+            # remove the last comma to get a properly formatted json
+            last_char_index = nuclei_json.rfind(",")
+            nuclei_json = nuclei_json[:last_char_index] + nuclei_json[last_char_index+1:]
 
-        nuclei_findings = json.loads(nuclei_json)
+            nuclei_findings = json.loads(nuclei_json)
 
     for vuln in nuclei_findings:
         info = vuln['info']
