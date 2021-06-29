@@ -9,7 +9,6 @@ nuclei -target $1 \
     -json \
     -exclude /root/nuclei-templates/technologies/tech-detect.yaml \
     -exclude /root/nuclei-templates/technologies/waf-detect.yaml \
-    -silent \
     -o /var/reports/nuclei.json
 
 # Parse Report for SEQHUB
