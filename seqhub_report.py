@@ -25,10 +25,6 @@ def parse_report(nuclei_report, seqhub_report):
             nuclei_json = f"[{nuclei_json}]"
             nuclei_json = nuclei_json.replace("}\n", "},")
 
-            # remove the last comma to get a properly formatted json
-            last_char_index = nuclei_json.rfind(",")
-            nuclei_json = nuclei_json[:last_char_index] + nuclei_json[last_char_index+1:]
-
             nuclei_findings = json.loads(nuclei_json)
         for vuln in nuclei_findings:
             info = vuln['info']
@@ -45,7 +41,7 @@ def parse_report(nuclei_report, seqhub_report):
             with open(seqhub_report, 'w'):
                 seqhub_findings["vulnerabilities"].append({
                     "title": info['name'],
-                    "description": f"{vuln['matched']} {description} ({vuln['templateID']})",
+                    "description": f"{vuln['matched-at']} {description} ({vuln['template-id']})",
                     "severity": severity,
                 })
 
