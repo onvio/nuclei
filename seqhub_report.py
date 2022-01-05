@@ -3,7 +3,7 @@ import os.path
 
 
 def create_empty_seqhub_report():
-    with open('/var/reports/seqhub.json', 'w') as f:
+    with open('seqhub.json', 'w') as f:
         json.dump({"vulnerabilities": []}, f, indent=4)
     return
 
@@ -24,7 +24,8 @@ def parse_report(nuclei_report, seqhub_report):
             # Nuclei json output is not valid json, so fix it
             nuclei_json = f"[{nuclei_json}]"
             nuclei_json = nuclei_json.replace("}\n", "},")
-
+            last_char_index = nuclei_json.rfind(",")
+            nuclei_json = nuclei_json[:last_char_index] + nuclei_json[last_char_index+1:]
             nuclei_findings = json.loads(nuclei_json)
         for vuln in nuclei_findings:
             info = vuln['info']
@@ -54,4 +55,4 @@ def parse_report(nuclei_report, seqhub_report):
 
 
 create_empty_seqhub_report()
-parse_report('/var/reports/nuclei.json', '/var/reports/seqhub.json')
+parse_report('/var/reports/nuclei.json', '/var/reports/seqhub.json')    
