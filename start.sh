@@ -10,6 +10,9 @@ nuclei -target $1 \
     -et /root/nuclei-templates/technologies/tech-detect.yaml \
     -et /root/nuclei-templates/technologies/waf-detect.yaml \
     -et /root/nuclei-templates/misconfiguration/http-missing-security-headers.yaml \
+    -et /root/nuclei-templates/ssl/ssl-dns-names.yaml \
+    -et /root/nuclei-templates/dns/cname-fingerprint.yaml \
+    -et /root/nuclei-templates/dns/ssl/tls-version.yaml \
     -o /var/reports/nuclei.json
 
 # Parse Report for SEQHUB
