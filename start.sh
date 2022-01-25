@@ -16,6 +16,8 @@ nuclei -target $1 \
     -et /root/nuclei-templates/ssl/ssl-dns-names.yaml \
     -et /root/nuclei-templates/dns/cname-fingerprint.yaml \
     -et /root/nuclei-templates/ssl/tls-version.yaml \
+    -et /root/nuclei-templates/dns/dnssec-detection.yaml \
+    -et /root/nuclei-templates/dns/nameserver-fingerprint.yaml \
     -o /var/reports/nuclei.json
 
 # Parse Report for SEQHUB
