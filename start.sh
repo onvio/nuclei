@@ -1,11 +1,12 @@
 #!/bin/sh
 set -x
 
+# Update engine
 nuclei -update
+# Update templates
 nuclei -update-templates
 
-# Remove Redirect Templates
-grep -r "redirects\:" /root/nuclei-templates/ | awk -F: '{print $1}' | xargs rm 2> /dev/null
+# Start scan
 nuclei -target $1 \
     -H "X-Scanner: Nuclei" \
     -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101 Firefox/82.0" \
